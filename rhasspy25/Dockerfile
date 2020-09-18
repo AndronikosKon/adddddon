@@ -1,6 +1,5 @@
-FROM rhasspy/rhasspy:2.5.5
+FROM synesthesiam/rhasspy-server:latest
 LABEL maintainer="Michael Hansen <hansen.mike@gmail.com>"
-
 ENV LANG C.UTF-8
 
 RUN apt-get update \
@@ -16,9 +15,10 @@ RUN apt-get update \
     && rm -rf .git \
     && apt-get purge -y --auto-remove git
 
-ENV CONFIG_PATH /data/options.json
-
-COPY run.sh /
+# Copy script to run
+COPY docker/run.sh /run.sh
 RUN chmod a+x /run.sh
+
+ENV CONFIG_PATH /data/options.json
 
 ENTRYPOINT ["/run.sh"]
